@@ -1,0 +1,39 @@
+{
+  "name": "textselectionapp",
+  "version": "0.1.0",
+  "description": "An application to allow users to capture selections of text",
+  "main": "index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "test": "react-scripts test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/steve-zissou/TextSelectionApp.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/steve-zissou/TextSelectionApp/issues"
+  },
+  "homepage": "https://github.com/steve-zissou/TextSelectionApp#readme",
+  "dependencies": {
+    "@material-ui/core": "^3.1.2",
+    "node": "^10.11.0",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2"
+  },
+  "devDependencies": {
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-react": "^7.11.1",
+    "react-scripts": "^2.0.4"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
