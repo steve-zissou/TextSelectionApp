@@ -29,7 +29,7 @@ The device will use a Google Assistant, which is being built into a new Google m
 
 Any home device would be a rival to Amazon's Echo, which launched in the UK on September 16. The Echo uses Amazon's own personal assistant, Alexa, to control internet of things devices as well as provide news, weather, and travel updates.
 
-Although the teaser website doesn't reference any of these products, Google previously said its Home device would launch before the end of 2016.`
+Although the teaser website doesn't reference any of these products, Google previously said its Home device would launch before the end of 2016.`,
 };
 
 export default CONFIG;

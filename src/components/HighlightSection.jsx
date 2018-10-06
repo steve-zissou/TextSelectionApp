@@ -11,7 +11,7 @@ import './HighlightSection.css';
 export default function HighlightSection() {
   const entries = [
     {
-      text: 'Current rumours around the devices – which have been codenamed Sailfish and Marlin – say the devices will be 5-inch and 5.5-inch phones.', 
+      text: 'Current rumours around the devices – which have been codenamed Sailfish and Marlin – say the devices will be 5-inch and 5.5-inch phones.',
       id: 1,
     },
     {
