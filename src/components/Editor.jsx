@@ -11,7 +11,7 @@ import HighlightButton from './HighlightButton';
 import 'draft-js/dist/Draft.css';
 import 'draft-js-inline-toolbar-plugin/lib/plugin.css';
 import 'draft-js-static-toolbar-plugin/lib/plugin.css';
-import editorStyles from './editorStyles.css';
+import './editorStyles.css';
 
 const inlineToolbarPlugin = createInlineToolbarPlugin({
   structure: [
@@ -88,7 +88,7 @@ export default class Editor extends React.Component {
   render() {
     const { editorState } = this.state;
     return (
-      <div className={editorStyles.editor} onClick={this.focus}>
+      <div className="editor" onClick={this.focus}>
         <PluginEditor
           editorState={editorState}
           onChange={this.onChange}
