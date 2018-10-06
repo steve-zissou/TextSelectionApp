@@ -6,4 +6,4 @@ To run this application:
 1. Navigate into the repository folder you just created
 1. Run ```npm install```
 1. Run ```npm start```
-1. TheaApplication will then be running at http://localhost:3000/
+1. The application will then be running at http://localhost:3000/
