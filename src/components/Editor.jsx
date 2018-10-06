@@ -3,6 +3,7 @@ import React from 'react';
 import Editor, { createEditorStateWithText } from 'draft-js-plugins-editor';
 import createInlineToolbarPlugin from 'draft-js-inline-toolbar-plugin';
 // Custom
+import CONFIG from '../CONFIG';
 import HighlightButton from './HighlightButton';
 
 // Style
@@ -18,14 +19,13 @@ const inlineToolbarPlugin = createInlineToolbarPlugin({
 });
 const { InlineToolbar } = inlineToolbarPlugin;
 const plugins = [inlineToolbarPlugin];
-const text = 'In this editor a toolbar shows up once you select part of the text …';
 
 export default class SimpleInlineToolbarEditor extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      editorState: createEditorStateWithText(text),
+      editorState: createEditorStateWithText(CONFIG.defaultText),
     };
 
     this.onChange = this.onChange.bind(this);
@@ -45,10 +45,11 @@ export default class SimpleInlineToolbarEditor extends React.Component {
   }
 
   render() {
+    const { editorState } = this.state;
     return (
       <div className={editorStyles.editor} onClick={this.focus}>
         <Editor
-          editorState={this.state.editorState}
+          editorState={editorState}
           onChange={this.onChange}
           plugins={plugins}
           ref={(element) => { this.editor = element; }}
