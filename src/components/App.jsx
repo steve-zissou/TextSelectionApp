@@ -1,14 +1,20 @@
 // 3rd Party
 import React from 'react';
+// Custom
+import HighlightSection from './HighlightSection';
+import TextSection from './TextSection';
+import TitleBar from './TitleBar';
+// Style
+import './App.css';
 
-class App extends React.Component {
-  render() {
-    return (
-      <div>
-        {"This is the beginning!"}
+export default function App() {
+  return (
+    <div>
+      <TitleBar />
+      <div id="section-container">
+        <TextSection />
+        <HighlightSection />
       </div>
-    );
-  }
+    </div>
+  );
 }
-
-export default App;
