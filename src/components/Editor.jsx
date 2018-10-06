@@ -1,4 +1,5 @@
 // 3rd Party
+import PropTypes from 'prop-types';
 import React from 'react';
 import Editor, { createEditorStateWithText } from 'draft-js-plugins-editor';
 import createInlineToolbarPlugin from 'draft-js-inline-toolbar-plugin';
@@ -20,7 +21,7 @@ const inlineToolbarPlugin = createInlineToolbarPlugin({
 const { InlineToolbar } = inlineToolbarPlugin;
 const plugins = [inlineToolbarPlugin];
 
-export default class SimpleInlineToolbarEditor extends React.Component {
+export default class EditorWithInlineToolbar extends React.Component {
   constructor(props) {
     super(props);
 
@@ -28,19 +29,24 @@ export default class SimpleInlineToolbarEditor extends React.Component {
       editorState: createEditorStateWithText(CONFIG.defaultText),
     };
 
-    this.onChange = this.onChange.bind(this);
     this.focus = this.focus.bind(this);
+    this.onClick = this.onClick.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
   onChange(editorState) {
-    console.log('on change called');
     this.setState({
       editorState,
     });
   }
 
+  onClick() {
+    const { onClick } = this.props;
+    onClick('Adding a new highlight every time the editor is clicked');
+  }
+
   focus() {
-    console.log('focus called');
+    this.onClick();
     this.editor.focus();
   }
 
@@ -59,3 +65,11 @@ export default class SimpleInlineToolbarEditor extends React.Component {
     );
   }
 }
+
+EditorWithInlineToolbar.defaultProps = {
+  onClick: () => {},
+};
+
+EditorWithInlineToolbar.propTypes = {
+  onClick: PropTypes.func,
+};
