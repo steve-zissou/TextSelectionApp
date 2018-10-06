@@ -1,4 +1,6 @@
+// 3rd Party
 import uuid from 'uuid/v1';
+
 
 export const ADD_HIGHLIGHT = 'ADD_HIGHLIGHT';
 

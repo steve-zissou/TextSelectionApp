@@ -34,7 +34,45 @@ export default class EditorWithInlineToolbar extends React.Component {
     this.onChange = this.onChange.bind(this);
   }
 
+  /**
+   * Get current selected text
+   * @param  {Draft.ContentState}
+   * @param  {Draft.SelectionState}
+   * @param  {String}
+   * @return {String}
+   */
+  // https://github.com/facebook/draft-js/issues/442
+  static getTextSelection(content, selection) {
+    const delimiter = '\n';
+    const startKey = selection.getStartKey();
+    const endKey = selection.getEndKey();
+    const blocks = content.getBlockMap();
+    let lastWasEnd = false;
+
+    const selectedBlock = blocks
+      .skipUntil(block => block.getKey() === startKey)
+      .takeUntil((block) => {
+        const result = lastWasEnd;
+        if (block.getKey() === endKey) { lastWasEnd = true; }
+        return result;
+      });
+
+    return selectedBlock
+      .map((block) => {
+        const key = block.getKey();
+        const text = block.getText();
+        const start = (key === startKey) ? selection.getStartOffset() : 0;
+        const end = (key === endKey) ? selection.getEndOffset() : text.length;
+        return text.slice(start, end);
+      })
+      .join(delimiter);
+  }
+
   onChange(editorState) {
+    const selectionState = editorState.getSelection();
+    const currentContent = editorState.getCurrentContent();
+    const selection = EditorWithInlineToolbar.getTextSelection(currentContent, selectionState);
+    console.log('selection: ', selection);
     this.setState({
       editorState,
     });
