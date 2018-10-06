@@ -4,10 +4,12 @@ import Paper from '@material-ui/core/Paper';
 // Custom
 import Editor from '../containers/Editor';
 import TextTitle from './TextTitle';
+// Style
+import './TextSection.css';
 
 export default function TextSection() {
   return (
-    <Paper>
+    <Paper id="text-section">
       <TextTitle />
       <Editor />
     </Paper>

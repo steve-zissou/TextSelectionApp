@@ -11,10 +11,10 @@ export default function App() {
   return (
     <div>
       <TitleBar />
-      <div id="section-container">
+      <main id="section-container">
         <TextSection />
         <HighlightSection />
-      </div>
+      </main>
     </div>
   );
 }

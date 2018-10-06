@@ -5,13 +5,14 @@ import Avatar from '@material-ui/core/Avatar';
 import HighlightIcon from '@material-ui/icons/Highlight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-
+// Style
+import './HighlightEntry.css';
 
 export default function HighlightEntry(props) {
   const { text } = props;
   const truncated = text.length < 200 ? text : `${text.slice(0, 197)}...`;
   return (
-    <ListItem>
+    <ListItem id="highlightentry-listitem">
       <Avatar>
         <HighlightIcon />
       </Avatar>

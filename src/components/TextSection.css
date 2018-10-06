@@ -1,9 +1,6 @@
-#highlight-section {
+#text-section {
   flex-grow: 1;
   height: calc(100vh - 100px);
-  margin-left: 10px;
-  min-width: 340px;
   overflow: auto;
   padding: 10px;
-  width: 400px;
 }
