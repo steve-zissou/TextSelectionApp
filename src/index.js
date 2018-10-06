@@ -1,3 +1,4 @@
+/* eslint react/jsx-filename-extension: 0 */
 // 3rd Party
 import React from 'react';
 import ReactDOM from 'react-dom';
