@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "react-scripts start",
-    "test": "react-scripts test"
+    "test": "react-scripts test --env=jsdom"
   },
   "repository": {
     "type": "git",
@@ -19,16 +19,29 @@
   "homepage": "https://github.com/steve-zissou/TextSelectionApp#readme",
   "dependencies": {
     "@material-ui/core": "^3.1.2",
+    "@material-ui/icons": "^3.0.1",
+    "ajv": "^6.5.4",
+    "draft-js": "^0.10.5",
+    "draft-js-buttons": "^2.0.1",
+    "draft-js-inline-toolbar-plugin": "^3.0.0",
+    "draft-js-plugins-editor": "^2.1.1",
+    "draft-js-static-toolbar-plugin": "^3.0.0",
     "node": "^10.11.0",
+    "prop-types": "^15.6.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "css-loader": "^1.0.0",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.6.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1",
-    "react-scripts": "^2.0.4"
+    "react-scripts": "^2.0.4",
+    "style-loader": "^0.23.0"
   },
   "browserslist": [
     ">0.2%",
