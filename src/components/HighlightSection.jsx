@@ -4,6 +4,8 @@ import Paper from '@material-ui/core/Paper';
 // Custom
 import HighlightEntryList from './HighlightEntryList';
 import HighlightTitle from './HighlightTitle';
+// Style
+import './HighlightSection.css';
 
 
 export default function HighlightSection() {
@@ -20,7 +22,7 @@ export default function HighlightSection() {
   ];
 
   return (
-    <Paper>
+    <Paper id="highlight-section">
       <HighlightTitle />
       <HighlightEntryList entries={entries} />
     </Paper>
