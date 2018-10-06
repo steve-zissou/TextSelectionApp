@@ -9,12 +9,13 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 export default function HighlightEntry(props) {
   const { text } = props;
+  const truncated = text.length < 200 ? text : `${text.slice(0, 197)}...`;
   return (
     <ListItem>
       <Avatar>
         <HighlightIcon />
       </Avatar>
-      <ListItemText primary={text} />
+      <ListItemText primary={truncated} />
     </ListItem>
   );
 }

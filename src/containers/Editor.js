@@ -11,7 +11,7 @@ function mapStateToProps() {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onClick: text => dispatch(addHighlightAction(text)),
+    onNewSelection: text => dispatch(addHighlightAction(text)),
   };
 }
 

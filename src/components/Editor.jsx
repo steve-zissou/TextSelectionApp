@@ -1,7 +1,7 @@
 // 3rd Party
 import PropTypes from 'prop-types';
 import React from 'react';
-import Editor, { createEditorStateWithText } from 'draft-js-plugins-editor';
+import PluginEditor, { createEditorStateWithText } from 'draft-js-plugins-editor';
 import createInlineToolbarPlugin from 'draft-js-inline-toolbar-plugin';
 // Custom
 import CONFIG from '../CONFIG';
@@ -21,7 +21,11 @@ const inlineToolbarPlugin = createInlineToolbarPlugin({
 const { InlineToolbar } = inlineToolbarPlugin;
 const plugins = [inlineToolbarPlugin];
 
-export default class EditorWithInlineToolbar extends React.Component {
+export default class Editor extends React.Component {
+  static isValidSelection(text) {
+    return text.replace(/(?:\r\n|\r|\n|\s)/g, '').length > 0;
+  }
+
   constructor(props) {
     super(props);
 
@@ -30,7 +34,6 @@ export default class EditorWithInlineToolbar extends React.Component {
     };
 
     this.focus = this.focus.bind(this);
-    this.onClick = this.onClick.bind(this);
     this.onChange = this.onChange.bind(this);
   }
 
@@ -43,7 +46,6 @@ export default class EditorWithInlineToolbar extends React.Component {
    */
   // https://github.com/facebook/draft-js/issues/442
   static getTextSelection(content, selection) {
-    const delimiter = '\n';
     const startKey = selection.getStartKey();
     const endKey = selection.getEndKey();
     const blocks = content.getBlockMap();
@@ -65,26 +67,21 @@ export default class EditorWithInlineToolbar extends React.Component {
         const end = (key === endKey) ? selection.getEndOffset() : text.length;
         return text.slice(start, end);
       })
-      .join(delimiter);
+      .join('\n');
   }
 
   onChange(editorState) {
+    const { onNewSelection } = this.props;
     const selectionState = editorState.getSelection();
     const currentContent = editorState.getCurrentContent();
-    const selection = EditorWithInlineToolbar.getTextSelection(currentContent, selectionState);
-    console.log('selection: ', selection);
-    this.setState({
-      editorState,
-    });
-  }
-
-  onClick() {
-    const { onClick } = this.props;
-    onClick('Adding a new highlight every time the editor is clicked');
+    const selection = Editor.getTextSelection(currentContent, selectionState);
+    if (Editor.isValidSelection(selection)) {
+      onNewSelection(selection);
+    }
+    this.setState({ editorState });
   }
 
   focus() {
-    this.onClick();
     this.editor.focus();
   }
 
@@ -92,7 +89,7 @@ export default class EditorWithInlineToolbar extends React.Component {
     const { editorState } = this.state;
     return (
       <div className={editorStyles.editor} onClick={this.focus}>
-        <Editor
+        <PluginEditor
           editorState={editorState}
           onChange={this.onChange}
           plugins={plugins}
@@ -104,10 +101,10 @@ export default class EditorWithInlineToolbar extends React.Component {
   }
 }
 
-EditorWithInlineToolbar.defaultProps = {
-  onClick: () => {},
+Editor.defaultProps = {
+  onNewSelection: () => {},
 };
 
-EditorWithInlineToolbar.propTypes = {
-  onClick: PropTypes.func,
+Editor.propTypes = {
+  onNewSelection: PropTypes.func,
 };
