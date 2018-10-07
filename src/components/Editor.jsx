@@ -1,84 +1,55 @@
 // 3rd Party
 import PropTypes from 'prop-types';
 import React from 'react';
-import PluginEditor, { createEditorStateWithText } from 'draft-js-plugins-editor';
-import createInlineToolbarPlugin from 'draft-js-inline-toolbar-plugin';
+import {
+  CompositeDecorator,
+  ContentState,
+  Editor,
+  EditorState,
+} from 'draft-js';
 // Custom
 import CONFIG from '../CONFIG';
-import HighlightButton from './HighlightButton';
+import HighlightSpan from './HighlightSpan';
+import { getTextSelection, isBlockInRange, isValidSelection } from '../utils/draft-js';
 
 // Style
 import 'draft-js/dist/Draft.css';
-import 'draft-js-inline-toolbar-plugin/lib/plugin.css';
 import './editorStyles.css';
 
-const inlineToolbarPlugin = createInlineToolbarPlugin({
-  structure: [
-    HighlightButton,
-  ],
-});
-const { InlineToolbar } = inlineToolbarPlugin;
-const plugins = [inlineToolbarPlugin];
 
-export default class Editor extends React.Component {
-  static isValidSelection(text) {
-    return text.replace(/(?:\r\n|\r|\n|\s)/g, '').length > 0;
-  }
-
+export default class HighlightEditor extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      editorState: createEditorStateWithText(CONFIG.defaultText),
-    };
-
     this.focus = this.focus.bind(this);
+    this.highlightStrategy = this.highlightStrategy.bind(this);
     this.onChange = this.onChange.bind(this);
-  }
 
-  /**
-   * Get current selected text
-   * @param  {Draft.ContentState}
-   * @param  {Draft.SelectionState}
-   * @param  {String}
-   * @return {String}
-   */
-  // https://github.com/facebook/draft-js/issues/442
-  static getTextSelection(content, selection) {
-    const startKey = selection.getStartKey();
-    const endKey = selection.getEndKey();
-    const blocks = content.getBlockMap();
-    let lastWasEnd = false;
+    const decorator = new CompositeDecorator([
+      {
+        strategy: this.highlightStrategy,
+        component: HighlightSpan,
+      },
+    ]);
+    const content = ContentState.createFromText(CONFIG.defaultText);
 
-    const selectedBlocks = blocks
-      .skipUntil(block => block.getKey() === startKey)
-      .takeUntil((block) => {
-        const result = lastWasEnd;
-        if (block.getKey() === endKey) { lastWasEnd = true; }
-        return result;
-      });
-
-    return selectedBlocks
-      .map((block) => {
-        const key = block.getKey();
-        const text = block.getText();
-        const start = (key === startKey) ? selection.getStartOffset() : 0;
-        const end = (key === endKey) ? selection.getEndOffset() : text.length;
-        return text.slice(start, end);
-      })
-      .join('\n');
+    this.state = {
+      editorState: EditorState.createWithContent(content, decorator),
+    };
   }
 
   onChange(editorState) {
     const { onNewSelection } = this.props;
     const selectionState = editorState.getSelection();
     const currentContent = editorState.getCurrentContent();
-    const text = Editor.getTextSelection(currentContent, selectionState);
-    if (Editor.isValidSelection(text)) {
+    const text = getTextSelection(currentContent, selectionState);
+
+    if (isValidSelection(text)) {
       const startKey = selectionState.getStartKey();
       const endKey = selectionState.getEndKey();
       const startOffset = selectionState.getStartOffset();
       const endOffset = selectionState.getEndOffset();
+
       onNewSelection({
         text,
         startKey,
@@ -87,7 +58,26 @@ export default class Editor extends React.Component {
         endOffset,
       });
     }
+
     this.setState({ editorState });
+  }
+
+  highlightStrategy(block, callback, content) {
+    const { highlights } = this.props;
+    const { length } = block.getText();
+    const key = block.getKey();
+
+    highlights.forEach(
+      ({
+        startKey, endKey, startOffset, endOffset,
+      }) => {
+        if (isBlockInRange(content, block, startKey, endKey)) {
+          const start = (key === startKey) ? startOffset : 0;
+          const end = (key === endKey) ? endOffset : length;
+          callback(start, end);
+        }
+      },
+    );
   }
 
   focus() {
@@ -98,22 +88,27 @@ export default class Editor extends React.Component {
     const { editorState } = this.state;
     return (
       <div className="editor" onClick={this.focus}>
-        <PluginEditor
+        <Editor
           editorState={editorState}
           onChange={this.onChange}
-          plugins={plugins}
           ref={(element) => { this.editor = element; }}
         />
-        <InlineToolbar />
       </div>
     );
   }
 }
 
-Editor.defaultProps = {
+HighlightEditor.defaultProps = {
+  highlights: [],
   onNewSelection: () => {},
 };
 
-Editor.propTypes = {
+HighlightEditor.propTypes = {
+  highlights: PropTypes.arrayOf(PropTypes.shape({
+    endKey: PropTypes.string.isRequired,
+    endOffset: PropTypes.number.isRequired,
+    startKey: PropTypes.string.isRequired,
+    startOffset: PropTypes.number.isRequired,
+  })),
   onNewSelection: PropTypes.func,
 };
