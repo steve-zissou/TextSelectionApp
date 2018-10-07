@@ -14,7 +14,7 @@ import { getTextSelection, isBlockInRange, isValidSelection } from '../utils/dra
 
 // Style
 import 'draft-js/dist/Draft.css';
-import './editorStyles.css';
+import './Editor.css';
 
 
 export default class HighlightEditor extends React.Component {
