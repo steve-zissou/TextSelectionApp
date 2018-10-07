@@ -24,17 +24,12 @@ export default class HighlightEditor extends React.Component {
     this.focus = this.focus.bind(this);
     this.highlightStrategy = this.highlightStrategy.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.getDecorator = this.getDecorator.bind(this);
 
-    const decorator = new CompositeDecorator([
-      {
-        strategy: this.highlightStrategy,
-        component: HighlightSpan,
-      },
-    ]);
     const content = ContentState.createFromText(CONFIG.defaultText);
 
     this.state = {
-      editorState: EditorState.createWithContent(content, decorator),
+      editorState: EditorState.createWithContent(content, this.getDecorator()),
     };
   }
 
@@ -59,7 +54,18 @@ export default class HighlightEditor extends React.Component {
       });
     }
 
-    this.setState({ editorState });
+    // re-assign the decorator to get the highlights to show immediately
+    const refreshedEditor = EditorState.set(editorState, { decorator: this.getDecorator() });
+    this.setState({ editorState: refreshedEditor });
+  }
+
+  getDecorator() {
+    return new CompositeDecorator([
+      {
+        strategy: this.highlightStrategy,
+        component: HighlightSpan,
+      },
+    ]);
   }
 
   highlightStrategy(block, callback, content) {
