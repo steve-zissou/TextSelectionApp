@@ -10,7 +10,6 @@ import HighlightButton from './HighlightButton';
 // Style
 import 'draft-js/dist/Draft.css';
 import 'draft-js-inline-toolbar-plugin/lib/plugin.css';
-import 'draft-js-static-toolbar-plugin/lib/plugin.css';
 import './editorStyles.css';
 
 const inlineToolbarPlugin = createInlineToolbarPlugin({
@@ -51,7 +50,7 @@ export default class Editor extends React.Component {
     const blocks = content.getBlockMap();
     let lastWasEnd = false;
 
-    const selectedBlock = blocks
+    const selectedBlocks = blocks
       .skipUntil(block => block.getKey() === startKey)
       .takeUntil((block) => {
         const result = lastWasEnd;
@@ -59,7 +58,7 @@ export default class Editor extends React.Component {
         return result;
       });
 
-    return selectedBlock
+    return selectedBlocks
       .map((block) => {
         const key = block.getKey();
         const text = block.getText();
@@ -74,9 +73,19 @@ export default class Editor extends React.Component {
     const { onNewSelection } = this.props;
     const selectionState = editorState.getSelection();
     const currentContent = editorState.getCurrentContent();
-    const selection = Editor.getTextSelection(currentContent, selectionState);
-    if (Editor.isValidSelection(selection)) {
-      onNewSelection(selection);
+    const text = Editor.getTextSelection(currentContent, selectionState);
+    if (Editor.isValidSelection(text)) {
+      const startKey = selectionState.getStartKey();
+      const endKey = selectionState.getEndKey();
+      const startOffset = selectionState.getStartOffset();
+      const endOffset = selectionState.getEndOffset();
+      onNewSelection({
+        text,
+        startKey,
+        endKey,
+        startOffset,
+        endOffset,
+      });
     }
     this.setState({ editorState });
   }

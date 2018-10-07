@@ -8,6 +8,10 @@ export default function highlights(state = [], action) {
         {
           id: action.id,
           text: action.text,
+          endKey: action.endKey,
+          endOffset: action.endOffset,
+          startKey: action.startKey,
+          startOffset: action.startOffset,
         },
       ];
     default:

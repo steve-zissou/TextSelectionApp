@@ -7,7 +7,6 @@ import {
 // Style
 import 'draft-js/dist/Draft.css';
 import 'draft-js-inline-toolbar-plugin/lib/plugin.css';
-import 'draft-js-static-toolbar-plugin/lib/plugin.css';
 
 
 export default class HeadlinesPicker extends React.Component {
