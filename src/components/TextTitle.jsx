@@ -2,7 +2,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import HighlightIcon from '@material-ui/icons/Highlight';
-import { IconButton } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 // Style
 import './TextTitle.css';
@@ -15,9 +15,16 @@ export default function TextTitle(props) {
       <Typography id="title-text" variant="headline" gutterBottom component="h3">
         Add text to highlight below
       </Typography>
-      <IconButton id="highlight-button" onClick={onHighlightClick} disabled={disableButton}>
-        <HighlightIcon />
-      </IconButton>
+      <Button
+        variant="contained"
+        color="primary"
+        id="highlight-button"
+        disabled={disableButton}
+        onClick={onHighlightClick}
+      >
+        Highlight
+        <HighlightIcon id="highlight-icon">highlight</HighlightIcon>
+      </Button>
     </div>
   );
 }

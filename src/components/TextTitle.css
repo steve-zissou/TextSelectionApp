@@ -1,7 +1,12 @@
 #highlight-button {
   display: inline;
   float: right;
-  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+#highlight-icon {
+  margin-bottom: -4px;
+  margin-left: 4px;
 }
 
 #text-title-container {
