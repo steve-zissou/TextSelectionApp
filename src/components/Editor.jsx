@@ -33,6 +33,14 @@ export default class HighlightEditor extends React.Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { highlights } = this.props;
+
+    if (nextProps.highlights.length !== highlights.length) {
+      this.focus();
+    }
+  }
+
   onChange(editorState) {
     const { onNewSelection } = this.props;
     const selectionState = editorState.getSelection();
@@ -55,7 +63,9 @@ export default class HighlightEditor extends React.Component {
     }
 
     // re-assign the decorator to get the highlights to show immediately
-    const refreshedEditor = EditorState.set(editorState, { decorator: this.getDecorator() });
+    let refreshedEditor = EditorState.set(editorState, { decorator: this.getDecorator() });
+    // clear the current selection
+    refreshedEditor = EditorState.moveSelectionToEnd(refreshedEditor);
     this.setState({ editorState: refreshedEditor });
   }
 

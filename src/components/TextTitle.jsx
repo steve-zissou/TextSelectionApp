@@ -9,13 +9,13 @@ import './TextTitle.css';
 
 
 export default function TextTitle(props) {
-  const { onHighlightClick } = props;
+  const { disableButton, onHighlightClick } = props;
   return (
     <div id="text-title-container">
       <Typography id="title-text" variant="headline" gutterBottom component="h3">
         Add text to highlight below
       </Typography>
-      <IconButton id="highlight-button" onClick={onHighlightClick}>
+      <IconButton id="highlight-button" onClick={onHighlightClick} disabled={disableButton}>
         <HighlightIcon />
       </IconButton>
     </div>
@@ -23,9 +23,11 @@ export default function TextTitle(props) {
 }
 
 TextTitle.defaultProps = {
+  disableButton: false,
   onHighlightClick: () => {},
 };
 
 TextTitle.propTypes = {
+  disableButton: PropTypes.bool,
   onHighlightClick: PropTypes.func,
 };
