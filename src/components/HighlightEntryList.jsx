@@ -4,13 +4,15 @@ import PropTypes from 'prop-types';
 import React from 'react';
 // Custom
 import HighlightEntry from './HighlightEntry';
+// Style
+import './HighlightEntryList.css';
 
 
 export default function HighlightEntryList(props) {
   const { entries } = props;
 
   return (
-    <List>
+    <List id="highlight-list">
       {entries.map(entry => <HighlightEntry key={entry.id} text={entry.text} />)}
     </List>
   );

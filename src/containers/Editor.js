@@ -1,18 +1,15 @@
 // 3rd Party
 import { connect } from 'react-redux';
 // Custom
-import { addHighlightAction } from '../actions/highlights';
+import { getAllHighlights } from '../reducers/highlights';
 import Editor from '../components/Editor';
 
 
-function mapStateToProps() {
-  return {};
-}
-
-function mapDispatchToProps(dispatch) {
+function mapStateToProps(state) {
+  const highlights = getAllHighlights(state.highlights);
   return {
-    onClick: text => dispatch(addHighlightAction(text)),
+    highlights,
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Editor);
+export default connect(mapStateToProps)(Editor);

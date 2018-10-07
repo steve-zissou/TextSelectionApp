@@ -2,7 +2,7 @@
 import React from 'react';
 // Custom
 import HighlightSection from './HighlightSection';
-import TextSection from './TextSection';
+import TextSection from '../containers/TextSection';
 import TitleBar from './TitleBar';
 // Style
 import './App.css';
@@ -11,10 +11,10 @@ export default function App() {
   return (
     <div>
       <TitleBar />
-      <div id="section-container">
+      <main id="section-container">
         <TextSection />
         <HighlightSection />
-      </div>
+      </main>
     </div>
   );
 }
