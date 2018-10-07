@@ -1,0 +1,13 @@
+#highlight-button {
+  display: inline;
+  float: right;
+  margin-top: -10px;
+}
+
+#text-title-container {
+  display: flow-root;
+}
+
+#title-text {
+  display: inline;
+}

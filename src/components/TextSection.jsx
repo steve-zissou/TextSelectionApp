@@ -10,7 +10,7 @@ import './TextSection.css';
 export default function TextSection() {
   return (
     <Paper id="text-section">
-      <TextTitle />
+      <TextTitle onHighlightClick={() => console.log('onHighlightClick')} />
       <Editor />
     </Paper>
   );
