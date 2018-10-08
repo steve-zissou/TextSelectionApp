@@ -1,5 +1,12 @@
 #highlight-list {
   flex-grow: 1;
-  height: calc(100vh - 160px);
+  height: calc(100vh - 185px);
+  background: #fefefe;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  box-shadow: inset 0px 1px 8px -3px #ABABAB;
+  box-sizing: border-box;
+  margin-bottom: 2em;
   overflow: auto;
+  padding: 16px;
 }
