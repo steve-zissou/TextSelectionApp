@@ -60,12 +60,13 @@ export default class HighlightEditor extends React.Component {
         startOffset,
         endOffset,
       });
+    } else {
+      // clear previous selection
+      onNewSelection(null);
     }
 
     // re-assign the decorator to get the highlights to show immediately
-    let refreshedEditor = EditorState.set(editorState, { decorator: this.getDecorator() });
-    // clear the current selection
-    refreshedEditor = EditorState.moveSelectionToEnd(refreshedEditor);
+    const refreshedEditor = EditorState.set(editorState, { decorator: this.getDecorator() });
     this.setState({ editorState: refreshedEditor });
   }
 
