@@ -70,6 +70,10 @@ export default class HighlightEditor extends React.Component {
     this.setState({ editorState: refreshedEditor });
   }
 
+  /**
+   * Get the decorator to add highlights to the editor.
+   * @returns {CompositeDecorator}
+   */
   getDecorator() {
     return new CompositeDecorator([
       {
@@ -79,22 +83,33 @@ export default class HighlightEditor extends React.Component {
     ]);
   }
 
+  /**
+   * Strategy which decides which parts of which blocks to highlight.
+   * @param {ContentBlock} block The current block to check.
+   * @param {func} callback The callback to run if a highlight is required.
+   * @param {ContentState} content The current editor content.
+   */
   highlightStrategy(block, callback, content) {
     const { highlights } = this.props;
     const { length } = block.getText();
     const key = block.getKey();
+    let runCallback = false;
+    let start = Infinity;
+    let end = -1;
 
     highlights.forEach(
       ({
         startKey, endKey, startOffset, endOffset,
       }) => {
         if (isBlockInRange(content, block, startKey, endKey)) {
-          const start = (key === startKey) ? startOffset : 0;
-          const end = (key === endKey) ? endOffset : length;
-          callback(start, end);
+          runCallback = true;
+          start = Math.min(start, (key === startKey) ? startOffset : 0);
+          end = Math.max(end, (key === endKey) ? endOffset : length);
         }
       },
     );
+
+    if (runCallback) { callback(start, end); }
   }
 
   focus() {
