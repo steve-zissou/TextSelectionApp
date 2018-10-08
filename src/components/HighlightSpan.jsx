@@ -1,13 +1,22 @@
+import PropTypes from 'prop-types';
 import React from 'react';
+// Style
+import './HighlightSpan.css';
 
 
 export default function HighlightSpan(props) {
+  const { children, offsetKey } = props;
   return (
     <span
-      style={{ backgroundColor: 'rgba(98, 177, 254, 1.0)' }}
-      data-offset-key={props.offsetKey}
+      id="highlight-span"
+      data-offset-key={offsetKey}
     >
-      {props.children}
+      {children}
     </span>
   );
 }
+
+HighlightSpan.propTypes = {
+  children: PropTypes.arrayOf(PropTypes.object).isRequired,
+  offsetKey: PropTypes.string.isRequired,
+};

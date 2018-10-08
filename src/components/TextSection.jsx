@@ -1,7 +1,6 @@
 // 3rd Party
 import PropTypes from 'prop-types';
 import React from 'react';
-import Paper from '@material-ui/core/Paper';
 // Custom
 import Editor from '../containers/Editor';
 import TextTitle from './TextTitle';
@@ -34,10 +33,10 @@ export default class TextSection extends React.Component {
   render() {
     const { selection } = this.state;
     return (
-      <Paper id="text-section">
+      <div id="text-section">
         <TextTitle disableButton={!selection} onHighlightClick={this.handleHighlightClick} />
         <Editor onNewSelection={this.handleNewSelection} />
-      </Paper>
+      </div>
     );
   }
 }
