@@ -20,6 +20,12 @@ export default function highlights(state = [], action) {
 }
 
 // selectors
+
+/**
+ * Get all highlights currently in the state.
+ * @param {array} state The current application state.
+ * @returns {array}
+ */
 export function getAllHighlights(state) {
   return state;
 }

@@ -10,7 +10,3 @@
   overflow: auto;
   padding: 16px;
 }
-
-.editor :global(.public-DraftEditor-content) {
-  min-height: 140px;
-}

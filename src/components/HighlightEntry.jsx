@@ -11,6 +11,7 @@ import './HighlightEntry.css';
 export default function HighlightEntry(props) {
   const { text } = props;
   const truncated = text.length < 200 ? text : `${text.slice(0, 197)}...`;
+
   return (
     <ListItem id="highlightentry-listitem" divider>
       <Avatar>

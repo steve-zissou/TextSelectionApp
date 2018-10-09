@@ -11,7 +11,6 @@ import {
 import CONFIG from '../CONFIG';
 import HighlightSpan from './HighlightSpan';
 import { getTextSelection, isBlockInRange, isValidSelection } from '../utils/draft-js';
-
 // Style
 import 'draft-js/dist/Draft.css';
 import './Editor.css';

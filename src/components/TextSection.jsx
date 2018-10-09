@@ -7,6 +7,7 @@ import TextTitle from './TextTitle';
 // Style
 import './TextSection.css';
 
+
 export default class TextSection extends React.Component {
   constructor(props) {
     super(props);
@@ -19,10 +20,17 @@ export default class TextSection extends React.Component {
     this.handleNewSelection = this.handleNewSelection.bind(this);
   }
 
+  /**
+   * Called when a new selection is made in the editor.
+   * @param {object} selection The new selection object.
+   */
   handleNewSelection(selection) {
     this.setState({ selection });
   }
 
+  /**
+   * Called when the highlight button is clicked.
+   */
   handleHighlightClick() {
     const { onNewSelection } = this.props;
     const { selection } = this.state;
