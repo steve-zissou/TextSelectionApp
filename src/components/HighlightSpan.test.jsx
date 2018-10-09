@@ -6,7 +6,8 @@ import HighlightSpan from './HighlightSpan';
 
 describe('HighlightSpan component', () => {
   it('renders without errors', () => {
-    const component = shallow(<HighlightSpan />);
+    const props = { children: [], offsetKey: 'key' };
+    const component = shallow(<HighlightSpan {...props} />);
     expect(component.exists()).to.equal(true);
   });
 });
