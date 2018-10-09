@@ -6,6 +6,7 @@ export default function highlights(state = [], action) {
       return [
         {
           id: action.id,
+          colour: action.colour,
           text: action.text,
           endKey: action.endKey,
           endOffset: action.endOffset,

@@ -1,5 +1,7 @@
 // 3rd Party
 import uuid from 'uuid/v1';
+// custom
+import getRandomColour from '../utils/colour';
 
 
 export const ADD_HIGHLIGHT = 'ADD_HIGHLIGHT';
@@ -15,6 +17,7 @@ export function addHighlightAction(selection) {
   } = selection;
 
   return {
+    colour: getRandomColour(),
     endKey,
     endOffset,
     id: uuid(),

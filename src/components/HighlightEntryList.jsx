@@ -13,7 +13,7 @@ export default function HighlightEntryList(props) {
 
   return (
     <List id="highlight-list">
-      {entries.map(entry => <HighlightEntry key={entry.id} text={entry.text} />)}
+      {entries.map(entry => <HighlightEntry key={entry.id} colour={entry.colour} text={entry.text} />)}
     </List>
   );
 }

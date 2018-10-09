@@ -17,11 +17,31 @@ import './Editor.css';
 
 
 export default class HighlightEditor extends React.Component {
+  /**
+   * Strategy which decides which parts of which blocks to highlight.
+   * @param {ContentBlock} block The current block to check.
+   * @param {func} callback The callback to run if a highlight is required.
+   * @param {ContentState} content The current editor content.
+   */
+  static highlightStrategy(block, callback, content, highlight) {
+    const { length } = block.getText();
+    const key = block.getKey();
+
+    const {
+      startKey, endKey, startOffset, endOffset,
+    } = highlight;
+
+    if (isBlockInRange(content, block, startKey, endKey)) {
+      const start = (key === startKey) ? startOffset : 0;
+      const end = (key === endKey) ? endOffset : length;
+      callback(start, end);
+    }
+  }
+
   constructor(props) {
     super(props);
 
     this.focus = this.focus.bind(this);
-    this.highlightStrategy = this.highlightStrategy.bind(this);
     this.onChange = this.onChange.bind(this);
     this.getDecorator = this.getDecorator.bind(this);
 
@@ -74,41 +94,19 @@ export default class HighlightEditor extends React.Component {
    * @returns {CompositeDecorator}
    */
   getDecorator() {
-    return new CompositeDecorator([
-      {
-        strategy: this.highlightStrategy,
-        component: HighlightSpan,
-      },
-    ]);
-  }
-
-  /**
-   * Strategy which decides which parts of which blocks to highlight.
-   * @param {ContentBlock} block The current block to check.
-   * @param {func} callback The callback to run if a highlight is required.
-   * @param {ContentState} content The current editor content.
-   */
-  highlightStrategy(block, callback, content) {
     const { highlights } = this.props;
-    const { length } = block.getText();
-    const key = block.getKey();
-    let runCallback = false;
-    let start = Infinity;
-    let end = -1;
 
-    highlights.forEach(
-      ({
-        startKey, endKey, startOffset, endOffset,
-      }) => {
-        if (isBlockInRange(content, block, startKey, endKey)) {
-          runCallback = true;
-          start = Math.min(start, (key === startKey) ? startOffset : 0);
-          end = Math.max(end, (key === endKey) ? endOffset : length);
-        }
-      },
+    // create a new decorator for each highlight.
+    const decorators = highlights.map(
+      highlight => ({
+        strategy: (block, callback, content) => {
+          HighlightEditor.highlightStrategy(block, callback, content, highlight);
+        },
+        component: HighlightSpan,
+        props: { colour: highlight.colour },
+      }),
     );
-
-    if (runCallback) { callback(start, end); }
+    return new CompositeDecorator(decorators);
   }
 
   focus() {
