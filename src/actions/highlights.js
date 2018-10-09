@@ -1,7 +1,7 @@
 // 3rd Party
 import uuid from 'uuid/v1';
 // custom
-import getRandomColour from '../utils/colour';
+import { getRandomColour } from '../utils/colour';
 
 
 export const ADD_HIGHLIGHT = 'ADD_HIGHLIGHT';

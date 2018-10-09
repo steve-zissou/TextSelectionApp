@@ -1,9 +1,11 @@
-// based on https://stackoverflow.com/questions/1484506/random-color-generator
+/* eslint import/prefer-default-export: 0 */
+
 /**
  * Get a random HEX colour.
+ * Based on: https://stackoverflow.com/questions/1484506/random-color-generator
  * @returns {string}
  */
-export default function getRandomColour() {
+export function getRandomColour() {
   const letters = '789ABCD';
   let color = '#';
 

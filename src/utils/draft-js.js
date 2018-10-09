@@ -1,7 +1,7 @@
 /* eslint import/prefer-default-export: 0 */
 /**
  * Helper functions for working with DraftJs.
- * Based on: // https://github.com/facebook/draft-js/issues/442
+ * Based on: https://github.com/facebook/draft-js/issues/442
  */
 
 /**
